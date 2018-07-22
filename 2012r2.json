@@ -1,0 +1,35 @@
+{
+    "builders": [
+        {
+            "type": "hyperv-iso",
+            "output_directory": "./output-{{ user `os_name` }}-base-hyperv/",
+            "vm_name": "{{ user `os_name` }}-base",
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_checksum_type": "sha256",
+            "communicator": "winrm",
+            "winrm_username":  "packer",
+            "winrm_password":  "packer",
+            "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+            "shutdown_timeout": "1h",
+            "floppy_files": [
+                "answer_files/2012r2/Autounattend.xml"
+              ],
+            "cpu": 1,
+            "disk_size": 81920,
+            "ram_size": 4096,
+            "generation": "{{ user `hyperv_gen` }}",
+            "boot_wait": "{{ user `boot_wait` }}s",
+            "boot_command": [
+                "a<wait>a<wait>a"
+            ]
+        }
+    ],
+    "variables": {
+        "os_name": "2012r2",
+        "iso_checksum": "6612B5B1F53E845AACDF96E974BB119A3D9B4DCB5B82E65804AB7E534DC7B4D5",
+        "iso_url": "C:\\Users\\joero\\Desktop\\packer\\iso\\9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+        "hyperv_gen": "1",
+        "boot_wait": "2m"
+    }
+  }
