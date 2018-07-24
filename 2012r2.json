@@ -10,6 +10,7 @@
             "communicator": "winrm",
             "winrm_username":  "packer",
             "winrm_password":  "packer",
+            "switch_name": "packer-hyperv-iso",
             "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
             "shutdown_timeout": "1h",
             "floppy_files": [

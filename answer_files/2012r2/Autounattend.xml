@@ -52,8 +52,13 @@
             <OSImage>
                <InstallFrom>
                   <MetaData wcm:action="add">
+                    <!--
+                        NAME / INDEX
+                        Hyper-V Server 2012 R2 SERVERHYPERCORE / 
+                        Windows Server 2012 R2 SERVERSTANDARD / 
+                     -->
                      <Key>/IMAGE/NAME</Key>
-                     <Value>Windows Server 2012 R2 SERVERSTANDARD</Value>
+                     <Value>Windows Server 2012 R2 Standard Evaluation (Server Core Installation)</Value>
                   </MetaData>
                </InstallFrom>
                <InstallTo>

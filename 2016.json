@@ -7,13 +7,17 @@
           "iso_url": "{{ user `iso_url` }}",
           "iso_checksum": "{{ user `iso_checksum` }}",
           "iso_checksum_type": "sha256",
-          "ssh_username": "packer",
-          "ssh_password": "packer",
+          "communicator": "winrm",
+          "winrm_username":  "{{ user `winrm_username` }}",
+          "winrm_password":  "{{ user `winrm_password` }}",
+          "switch_name": "packer-hyperv-iso",
           "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
           "shutdown_timeout": "1h",
-          "secondary_iso_images": [
-            "C:\\Users\\joero\\Desktop\\packer\\answer_files\\2016\\Autounattend.xml"
+          "floppy_files": [
+            "answer_files/2016/Autounattend.xml",
+            "winrm.ps1"
           ],
+          "iso_target_path": "C:\\Users\\joero\\Desktop\\packer\\iso\\",
           "cpu": 1,
           "disk_size": 81920,
           "ram_size": 4096,
@@ -24,11 +28,23 @@
           ]
       }
   ],
+  "provisioners": [
+    {
+        "type": "powershell",
+        "script": "rdpenable.ps1"
+    },
+    {
+        "type": "powershell",
+        "inline": "Write-Host 'I like turtles'"
+    }
+],
   "variables": {
       "os_name": "2016",
-      "iso_checksum": "6612B5B1F53E845AACDF96E974BB119A3D9B4DCB5B82E65804AB7E534DC7B4D5",
-      "iso_url": "C:\\Users\\joero\\Desktop\\packer\\iso\\9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9 (1).ISO",
-      "hyperv_gen": "2",
-      "boot_wait": "2m"
+      "iso_checksum": "1CE702A578A3CB1AC3D14873980838590F06D5B7101C5DAACCBAC9D73F1FB50F",
+      "iso_url": "C:\\Users\\joero\\Desktop\\packer\\iso\\Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
+      "hyperv_gen": "1",
+      "boot_wait": "2m",
+      "winrm_username": "joerod",
+      "winrm_password": "Ftbl4245!!!"
   }
 }
