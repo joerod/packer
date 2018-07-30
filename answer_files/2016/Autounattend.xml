@@ -48,13 +48,13 @@
             </Disk>
          </DiskConfiguration>
          <ImageInstall>
-            <OSImage> 
-            <InstallFrom>
+            <OSImage>
+               <InstallFrom>
                   <MetaData wcm:action="add">
                      <Key>/IMAGE/INDEX</Key>
                      <Value>2</Value>
                   </MetaData>
-               </InstallFrom>         
+               </InstallFrom>
                <InstallTo>
                   <DiskID>0</DiskID>
                   <PartitionID>2</PartitionID>
@@ -136,6 +136,12 @@
          <RegisteredOwner>joerod</RegisteredOwner>
          <DisableAutoDaylightTimeSet>false</DisableAutoDaylightTimeSet>
          <TimeZone>Eastern Standard Time</TimeZone>
+         <FirstLogonCommands>
+            <SynchronousCommand wcm:action="add">
+               <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\winrm.ps1</CommandLine>
+               <Order>1</Order>
+            </SynchronousCommand>
+         </FirstLogonCommands>
          <VisualEffects>
             <SystemDefaultBackgroundColor>15</SystemDefaultBackgroundColor>
          </VisualEffects>
