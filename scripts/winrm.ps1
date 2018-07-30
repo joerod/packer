@@ -1,8 +1,8 @@
 # move all (non-domain) network interfaces into the private profile to make winrm happy (it needs at
 # least one private interface; for vagrant its enough to configure the first network interface).
-Get-NetConnectionProfile `
-    | Where-Object {$_.NetworkCategory -ne 'DomainAuthenticated'} `
-    | Set-NetConnectionProfile -NetworkCategory Private
+Get-NetConnectionProfile |
+  Where-Object {$_.NetworkCategory -ne 'DomainAuthenticated'} |
+  Set-NetConnectionProfile -NetworkCategory Private
 
 # configure WinRM.
 Write-Output 'Configuring WinRM...'
@@ -21,6 +21,6 @@ $winRmFirewallRuleNames = @(
     'WINRM-HTTP-In-TCP-PUBLIC'  # Windows Remote Management (HTTP-In)   # Windows Server
     'WINRM-HTTP-In-TCP-NoScope' # Windows Remote Management (HTTP-In)   # Windows 10
 )
-Get-NetFirewallRule -Direction Inbound -Enabled False `
-    | Where-Object {$winRmFirewallRuleNames -contains $_.Name} `
-    | Set-NetFirewallRule -Enable True
+Get-NetFirewallRule -Direction Inbound -Enabled False |
+  Where-Object {$winRmFirewallRuleNames -contains $_.Name} |
+  Set-NetFirewallRule -Enable True
