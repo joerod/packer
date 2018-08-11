@@ -31,10 +31,9 @@ Foreach ($objService in $objServiceManager.Services){
         }
     }
 }
-$objCollection = New-Object -ComObject "Microsoft.Update.UpdateColl"
 $objResults = $objSearcher.Search("IsInstalled=0")
 $FoundUpdatesToDownload = $objResults.Updates.count
-if ($objResults.Updates.count -gt 0){
+if ($FoundUpdatesToDownload  -gt 0){
     foreach($Update in $objResults.Updates){
         if($Update.EulaAccepted -eq 0 ){
             $Update.AcceptEula()
@@ -53,4 +52,5 @@ if ($objResults.Updates.count -gt 0){
     $objInstaller = $objSession.CreateUpdateInstaller() 
     $objInstaller.Updates = $objCollectionTmp 
     $InstallResult = $objInstaller.Install() 
+    $InstallResult 
 } 

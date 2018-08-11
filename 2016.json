@@ -22,8 +22,9 @@
           "iso_target_path": "C:\\Users\\joero\\Desktop\\packer\\iso\\",
           "cpu": 1,
           "disk_size": 81920,
-          "ram_size": 4096,
-          "generation": "{{ user `hyperv_gen` }}"
+          "ram_size": 8096,
+          "generation": "{{ user `hyperv_gen` }}",
+          "headless": "true"
       }
   ],
   "provisioners": [
@@ -33,9 +34,26 @@
     },
     {
         "type": "powershell",
+        "script": "scripts/chocolatey.ps1"
+    },
+    {
+        "type": "windows-shell",
+        "inline": ["C:\\ProgramData\\chocolatey\\bin\\choco.exe install chocolatey-core.extension -y"]
+    },
+    {
+        "type": "file",
+        "source": "scripts/bootstrap.ps1",
+        "destination": "C:\\Program Files\\joerod\\bootstrap.ps1"
+    },
+    {
+        "type": "powershell",
         "script": "scripts/patch.ps1",
         "elevated_user": "{{ user `winrm_username` }}",
         "elevated_password": "{{ user `winrm_password` }}"
+    },
+    {
+        "type": "windows-restart",
+        "restart_timeout": "15m"
     },
     {
         "type": "windows-restart",
