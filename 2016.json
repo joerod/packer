@@ -53,7 +53,7 @@
     },
     {
         "type": "windows-restart",
-        "restart_timeout": "15m"
+        "restart_timeout": "45m"
     },
     {
         "type": "windows-restart",
