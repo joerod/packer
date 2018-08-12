@@ -1,0 +1,29 @@
+{
+    "builders": [
+        {
+        "type": "amazon-ebs",
+        "access_key": "AKIAIZ6PH7MBGJCJI2VA",
+        "secret_key": "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",
+        "region": "us-east-1",
+        "source_ami": "ami-2d360152",
+        "instance_type": "t2.micro",
+        "ami_name": "packer-quick-start {{timestamp}}",
+        "user_data_file":"scripts/winrm_aws.ps1",
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_use_ssl": true,
+        "winrm_insecure": true
+        "security_group_id": 
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "script": "chocolatey.ps1"
+        },
+        {
+            "type": "powershell",
+            "script": "chocolatey.ps1"
+        }
+    ]
+}
