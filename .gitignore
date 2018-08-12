@@ -1,3 +1,5 @@
 *iso
+hyper-v_from_packer.ps1
+aws.json
 packer_cahce/
-
+output-2016-base-hyperv/

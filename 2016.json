@@ -24,8 +24,24 @@
           "disk_size": 81920,
           "ram_size": 8096,
           "generation": "{{ user `hyperv_gen` }}",
-          "headless": "true"
-      }
+          "headless": "true",
+          "skip_export": "true" 
+      },
+      {
+        "type": "amazon-ebs",
+        "access_key": "{{ user `access_key` }}",
+        "secret_key": "{{ user `secret_key` }}",
+        "region": "{{ user `region` }}",
+        "source_ami": "{{ user `source_ami` }}",
+        "security_group_id": "sg-0a41bd1420bb0e2a8",
+        "instance_type": "t2.micro",
+        "ami_name": "packer-quick-start {{timestamp}}",
+        "user_data_file":"scripts/winrm_aws.ps1",
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_use_ssl": true,
+        "winrm_insecure": true
+        }
   ],
   "provisioners": [
     {
@@ -57,13 +73,15 @@
     },
     {
         "type": "windows-restart",
-        "restart_timeout": "15m"
+        "restart_timeout": "30m"
     }
 ],
   "variables": {
       "os_name": "2016",
       "iso_checksum": "1CE702A578A3CB1AC3D14873980838590F06D5B7101C5DAACCBAC9D73F1FB50F",
       "iso_url": "C:\\Users\\joero\\Desktop\\packer\\iso\\Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
-      "hyperv_gen": "1"
+      "hyperv_gen": "1",
+      "source_ami": "ami-2d360152",
+      "region": "us-east-1"
   }
 }
