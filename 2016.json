@@ -34,13 +34,14 @@
         "region": "{{ user `region` }}",
         "source_ami": "{{ user `source_ami` }}",
         "security_group_id": "sg-0a41bd1420bb0e2a8",
-        "instance_type": "t2.micro",
+        "instance_type": "m3.medium",
         "ami_name": "packer-quick-start {{timestamp}}",
-        "user_data_file":"scripts/winrm_aws.ps1",
+        "user_data_file":"scripts/winrm.txt",
         "communicator": "winrm",
+        "winrm_insecure": true,
         "winrm_username": "Administrator",
-        "winrm_use_ssl": true,
-        "winrm_insecure": true
+        "winrm_port": 5985,
+	    "winrm_timeout": "10m"
         }
   ],
   "provisioners": [
