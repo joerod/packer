@@ -35,13 +35,37 @@
         "source_ami": "{{ user `source_ami` }}",
         "security_group_id": "sg-0a41bd1420bb0e2a8",
         "instance_type": "m3.medium",
-        "ami_name": "packer-quick-start {{timestamp}}",
+        "ami_name": "{{ user `os_name` }}-base",
         "user_data_file":"scripts/winrm.txt",
         "communicator": "winrm",
         "winrm_insecure": true,
         "winrm_username": "Administrator",
         "winrm_port": 5985,
 	    "winrm_timeout": "10m"
+        },
+        {
+        "type": "azure-arm",
+        "client_id": "{{ user `client_id` }}",
+        "client_secret": "{{ user `client_secret` }}",
+        "resource_group_name": "packer",
+        "storage_account": "buildimages",
+        "subscription_id": "{{ user `subscription_id` }}",
+        "tenant_id": "{{ user `tenant_id` }}", 
+          
+        "capture_container_name": "images",
+        "capture_name_prefix": "packer",
+        
+        "os_type": "Windows",
+        "image_publisher": "MicrosoftWindowsServer",
+        "image_offer": "windowsserver",
+        "image_sku": "2016-Datacenter",
+        
+        "azure_tags": {
+            "type": "base_image"
+        },
+        
+        "location": "East US",
+        "vm_size": "Standard_A1"
         }
   ],
   "provisioners": [
@@ -64,9 +88,7 @@
     },
     {
         "type": "powershell",
-        "script": "scripts/patch.ps1",
-        "elevated_user": "{{ user `winrm_username` }}",
-        "elevated_password": "{{ user `winrm_password` }}"
+        "script": "scripts/patch.ps1"
     },
     {
         "type": "windows-restart",
@@ -75,6 +97,14 @@
     {
         "type": "windows-restart",
         "restart_timeout": "30m"
+    },
+    {
+        "type": "powershell",
+        "inline": [
+            "& $env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /quiet /quit",
+            "while($true) { $imageState = Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\State | Select ImageState; if($imageState.ImageState -ne 'IMAGE_STATE_GENERALIZE_RESEAL_TO_OOBE') { Write-Output $imageState.ImageState; Start-Sleep -s 10  } else { break } }"
+        ],
+        "only": ["azure-arm"]
     }
 ],
   "variables": {
