@@ -1,5 +1,4 @@
 write-output "Running User Data Script"
-write-host "(host) Running User Data Script"
 
 Set-ExecutionPolicy Unrestricted -Scope LocalMachine -Force -ErrorAction Ignore
 
